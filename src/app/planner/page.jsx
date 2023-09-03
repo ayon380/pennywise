@@ -87,7 +87,7 @@ const Page = () => {
             <div className="bl md:mt-5 h-1 bg-black  rounded-lg"></div>
             {data.transactions &&
               data.transactions.map((transaction) => (
-                <>
+                <div key={transaction.date} >
                   <div className="flex  justify-between md:text-2xl">
                     <div className="q1 text-center w-1/5">
                       {transaction.category}
@@ -106,7 +106,7 @@ const Page = () => {
                     </div>
                   </div>
                   <div className="bl md:mt-5 h-1 bg-gray-200  rounded-lg"></div>
-                </>
+                </div>
               ))}
           </div>
           <button
