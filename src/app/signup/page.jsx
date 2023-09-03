@@ -14,9 +14,12 @@ const Page = () => {
   const handleAccountBalanceChange = (e) => {
     setAccountBalance(e.target.value);
   };
-  if (status != "authenticated") {
-    router.push("/login");
-  }
+  React.useEffect(() => {
+    if (status != "authenticated") {
+      router.push("/login");
+    }
+  });
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -32,7 +35,7 @@ const Page = () => {
       image: session.user.image,
       name: session.user.name,
     };
-    let res =await  fetch("api/user/add", {
+    let res = await fetch("api/user/add", {
       method: "POST",
       body: JSON.stringify(data),
     });

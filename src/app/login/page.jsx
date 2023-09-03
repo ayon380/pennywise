@@ -27,13 +27,13 @@ const Page = () => {
       } else {
         router.push("/signup");
       }
-    }
-    else
-    {
+    } else {
       router.push("/login");
     }
   }
-  func();
+  React.useEffect(() => {
+    func();
+  }, [session]);
   return (
     <div className="flex bg-black flex-col items-center justify-center min-h-screen">
       {status === "authenticated" ? (

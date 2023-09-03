@@ -44,11 +44,11 @@ const Page = () => {
     setIsFormOpen(false);
   };
 
-  if (status !== "authenticated") {
-    router.push("/login");
-  }
   React.useEffect(() => {
     func();
+    if (status !== "authenticated") {
+      router.push("/login");
+    }
   }, [isFormOpen]);
   return (
     <>
