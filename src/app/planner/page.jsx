@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 import { AiOutlinePlus } from "react-icons/ai";
 import TransactionForm from "../../components/TransactionForm";
-const Page =  () => {
+const Page = () => {
   const [data, setData] = React.useState([]);
   const func = async () => {
     try {
@@ -15,7 +15,6 @@ const Page =  () => {
         {
           method: "GET",
         },
-        { cache: "no-store" }
       );
       const data = await res.json();
       console.log(data.success);
