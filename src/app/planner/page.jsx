@@ -1,4 +1,5 @@
 "use client";
+export const dynamic = "force-dynamic";
 import React from "react";
 import { useRouter } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
@@ -7,13 +8,17 @@ import TransactionForm from "../../components/TransactionForm";
 const Page = () => {
   const [data, setData] = React.useState([]);
   async function func() {
-    const res = await fetch("api/transaction/get", {
-      method: "GET",
-    });
-    const data = await res.json();
-    console.log(data.success);
-    console.log(data.data);
-    setData(data.data);
+    try {
+      const res = await fetch("api/transaction/get", {
+        method: "GET",
+      });
+      const data = await res.json();
+      console.log(data.success);
+      console.log(data.data);
+      setData(data.data);
+    } catch (err) {
+      console.log(err);
+    }
   }
   const formattime = (timestamp) => {
     const date = new Date(timestamp);
@@ -87,7 +92,7 @@ const Page = () => {
             <div className="bl md:mt-5 h-1 bg-black  rounded-lg"></div>
             {data.transactions &&
               data.transactions.map((transaction) => (
-                <div key={transaction.date} >
+                <div key={transaction.date}>
                   <div className="flex  justify-between md:text-2xl">
                     <div className="q1 text-center w-1/5">
                       {transaction.category}
