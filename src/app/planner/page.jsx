@@ -1,17 +1,22 @@
-"use client";
 export const dynamic = "force-dynamic";
+"use client";
+
 import React from "react";
 import { useRouter } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 import { AiOutlinePlus } from "react-icons/ai";
 import TransactionForm from "../../components/TransactionForm";
-const Page = () => {
+const Page =  () => {
   const [data, setData] = React.useState([]);
-  async function func() {
+  const func = async () => {
     try {
-      const res = await fetch("api/transaction/get", {
-        method: "GET",
-      });
+      const res = await fetch(
+        "api/transaction/get",
+        {
+          method: "GET",
+        },
+        { cache: "no-store" }
+      );
       const data = await res.json();
       console.log(data.success);
       console.log(data.data);
@@ -19,7 +24,7 @@ const Page = () => {
     } catch (err) {
       console.log(err);
     }
-  }
+  };
   const formattime = (timestamp) => {
     const date = new Date(timestamp);
 
@@ -57,7 +62,7 @@ const Page = () => {
   }, [isFormOpen]);
   return (
     <>
-      {session && status === "authenticated" && (
+      {session && data && status === "authenticated" && (
         <div>
           <h1 className="my-10 md:my-32 text-4xl md:text-8xl text-center">
             PennyWise
