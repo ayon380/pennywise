@@ -1,13 +1,15 @@
 export const dynamic = "force-dynamic";
 "use client";
+// import type { Metadata } from 'next';
 import React from "react";
 import { useRouter } from "next/navigation";
 import Loading from "../../components/Loading";
-import Image from "next/image";
 import { signOut, useSession } from "next-auth/react";
 import { AiOutlinePlus } from "react-icons/ai";
 import TransactionForm from "../../components/TransactionForm";
+
 const Page = () => {
+
   const [data, setData] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
   const func = async () => {
@@ -58,6 +60,7 @@ const Page = () => {
   }, [isFormOpen]);
   return (
     <div className="bg-black pt-16 md:pt-32 text-white pb-96 h-full">
+    
       {loading && <Loading />}
       {
         // if user is not logged in

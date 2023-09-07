@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useSession, signOut } from "next-auth/react";
 import Image from "next/image";
 import { getPreEmitDiagnostics } from "typescript";
+import Head from "next/head";
 const MyComponent = () => {
   const [isPopupOpen, setPopupOpen] = useState(false);
   const { data: session } = useSession();
@@ -27,6 +28,7 @@ const MyComponent = () => {
   console.log(session);
   return (
     <>
+      
       <div className="bg-black text-white fixed top-0 w-full">
         <div className="flex justify-between">
           <div className="lp mt-4 ml-3 text-2xl">{greeting()}</div>
