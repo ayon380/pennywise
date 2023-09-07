@@ -1,24 +1,25 @@
 export const dynamic = "force-dynamic";
-"use client"
+"use client";
 import React from "react";
 import { useRouter } from "next/navigation";
+import Loading from "../../components/Loading";
+import Image from "next/image";
 import { signOut, useSession } from "next-auth/react";
 import { AiOutlinePlus } from "react-icons/ai";
 import TransactionForm from "../../components/TransactionForm";
 const Page = () => {
   const [data, setData] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
   const func = async () => {
     try {
-      const res = await fetch(
-        "api/transaction/get",
-        {
-          method: "GET",
-        },
-      );
+      const res = await fetch("api/transaction/get", {
+        method: "GET",
+      });
       const data = await res.json();
       console.log(data.success);
       console.log(data.data);
       setData(data.data);
+      setLoading(false);
     } catch (err) {
       console.log(err);
     }
@@ -54,15 +55,17 @@ const Page = () => {
 
   React.useEffect(() => {
     func();
-    if (status !== "authenticated") {
-      router.push("/login");
-    }
   }, [isFormOpen]);
   return (
-    <>
+    <div className="bg-black pt-16 md:pt-32 text-white pb-96 h-full">
+      {loading && <Loading />}
+      {
+        // if user is not logged in
+        session && status === "unauthenticated" && router.push("/auth/signin")
+      }
       {session && data && status === "authenticated" && (
         <div>
-          <h1 className="my-10 md:my-32 text-4xl md:text-8xl text-center">
+          <h1 className="py-10 md:py-32 text-4xl md:text-8xl text-center">
             PennyWise
           </h1>
           <div className="lp ">
@@ -124,17 +127,9 @@ const Page = () => {
             <AiOutlinePlus />
           </button>
           <TransactionForm isOpen={isFormOpen} onClose={handleCloseForm} />
-          <div className="pl flex justify-between my-20 w-full">
-            <button
-              className=" bg-blue rounded-xl bg-blue-600 p-2 px-3 m-auto hover:bg-blue-700"
-              onClick={() => signOut("google")}
-            >
-              Logout
-            </button>
-          </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 
