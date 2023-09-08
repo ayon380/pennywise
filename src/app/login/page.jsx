@@ -4,9 +4,6 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Loading from "@/components/Loading";
-export const metadata = {
-  title: "PennyWise",
-};
 const Page = () => {
   const router = useRouter();
   const [loading, setLoading] = React.useState(true);
