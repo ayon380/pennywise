@@ -1,23 +1,17 @@
 import { NextResponse } from "next/server";
 import BudgetCategory from "../../../../../models/Budget"; // Import the mongoose model
+import { getServerSession } from "next-auth";
 import connectDB from "../../../../../middleware/mongoose"; // Import the database connection
-export async function POST(req) {
+export async function DELETE(req) {
   try {
-    const body = await req.json();
-    const { email } = body;
-    await connectDB();
-    console.log(email);
-    const q =await BudgetCategory.findOne({ email }).exec();
-    console.log(q);
-    if (q) {
+    const session = await getServerSession({ req });
+    if (session) {
+      const email = session.user.email;
+      await connectDB();
+      const q = await BudgetCategory.findOneAndDelete({ email });
       return NextResponse.json({
         success: true,
-        message: "name already exists",
-      });
-    } else {
-      return NextResponse.json({
-        success: false,
-        message: "Budget doesnt exist",
+        message: "User deleted",
       });
     }
   } catch (error) {

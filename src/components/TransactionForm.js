@@ -55,7 +55,7 @@ const TransactionForm = ({ isOpen, onClose }) => {
   };
   return isOpen ? (
     <div className="fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-50 flex items-center justify-center z-50 backdrop-blur-lg">
-      <div className="bg-white p-4 md:p-8 rounded-lg shadow-lg">
+      <div className="bg-black text-white p-4 md:p-8 rounded-xl border-2 border-cyan-500 shadow-cyan-500 shadow-2xl">
         <h2 className="text-2xl font-semibold mb-4">Add Transaction</h2>
         <form onSubmit={handleSubmit}>
           {/* Add form fields for category, description, amount, type */}
@@ -69,7 +69,7 @@ const TransactionForm = ({ isOpen, onClose }) => {
               name="category"
               value={formData.category}
               onChange={handleCategoryChange}
-              className="border border-gray-300 rounded w-full p-2"
+              className="border bg-black text-white border-gray-300 rounded-xl w-full p-2"
             >
               <option value="income">Income</option>
               <option value="transportation">Transportation</option>
@@ -93,7 +93,7 @@ const TransactionForm = ({ isOpen, onClose }) => {
                 className={`${
                   formData.type === "credit"
                     ? "bg-green-500 hover:bg-green-600"
-                    : "bg-gray-300 hover:bg-gray-400"
+                    : "bg-blue-500 hover:bg-blue-600"
                 } text-white px-6 py-2 rounded-xl`}
                 onClick={() => handleTypeChange("credit")}
               >
@@ -104,7 +104,7 @@ const TransactionForm = ({ isOpen, onClose }) => {
                 className={`${
                   formData.type === "debit"
                     ? "bg-red-500 hover:bg-red-600"
-                    : "bg-gray-300 hover:bg-gray-400"
+                    : "bg-blue-500 hover:bg-blue-600"
                 } text-white px-6 py-2 rounded-xl`}
                 onClick={() => handleTypeChange("debit")}
               >
@@ -113,19 +113,20 @@ const TransactionForm = ({ isOpen, onClose }) => {
             </div>
           </div>
           {/* Amount */}
-          <div className="mb-4">
+          <div className="mb-4 bg-black text-white">
             <label htmlFor="amount" className="block mb-2">
               Amount
             </label>
             <input
               type="number"
+              
               id="amount"
               name="amount"
               value={formData.amount}
               onChange={(e) =>
                 setFormData({ ...formData, amount: e.target.value })
               }
-              className="border border-gray-300 rounded w-full p-2"
+              className="border border-gray-300 rounded-xl bg-black text-white rounded w-full p-2"
               required
             />
           </div>
@@ -141,7 +142,7 @@ const TransactionForm = ({ isOpen, onClose }) => {
               onChange={(e) =>
                 setFormData({ ...formData, description: e.target.value })
               }
-              className="border border-gray-300 rounded w-full p-2"
+              className="border bg-black rounded-xl text-white border-gray-300  w-full p-2"
               rows="4"
             />
           </div>
@@ -152,7 +153,7 @@ const TransactionForm = ({ isOpen, onClose }) => {
             <DatePicker
               selected={selectedDate}
               onChange={(date) => setSelectedDate(date)}
-              className="border border-gray-300 rounded w-full p-2"
+              className="border rounded-xl bg-black text-white border-gray-300  w-full p-2"
               showTimeSelect
               timeFormat="HH:mm"
               timeIntervals={15}
@@ -162,7 +163,7 @@ const TransactionForm = ({ isOpen, onClose }) => {
           <div className="flex justify-end">
             <button
               type="button"
-              className="mr-4 px-4 py-2 text-gray-600 hover:text-gray-800"
+              className="mr-4 px-4 py-2 bg-red-500 text-white rounded-xl hover:bg-red-600"
               onClick={onClose}
             >
               Cancel

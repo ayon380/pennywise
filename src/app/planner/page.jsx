@@ -1,5 +1,6 @@
-export const dynamic = "force-dynamic";
 "use client";
+export const dynamic = "force-dynamic";
+
 // import type { Metadata } from 'next';
 import React from "react";
 import { useRouter } from "next/navigation";
@@ -9,7 +10,6 @@ import { AiOutlinePlus } from "react-icons/ai";
 import TransactionForm from "../../components/TransactionForm";
 
 const Page = () => {
-
   const [data, setData] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
   const func = async () => {
@@ -60,7 +60,6 @@ const Page = () => {
   }, [isFormOpen]);
   return (
     <div className="bg-black pt-16 md:pt-32 text-white pb-96 h-full">
-    
       {loading && <Loading />}
       {
         // if user is not logged in
@@ -98,29 +97,35 @@ const Page = () => {
               <div className="q4 text-center w-1/5">Type</div>
               <div className="q5 text-center w-1/5">Date</div>
             </div>
-            <div className="bl md:mt-5 h-1 bg-black  rounded-lg"></div>
+            <div className="bl md:mt-5 h-1 bg-cyan-white  rounded-lg"></div>
             {data.transactions &&
-              data.transactions.map((transaction) => (
-                <div key={transaction.date}>
-                  <div className="flex  justify-between md:text-2xl">
-                    <div className="q1 text-center w-1/5">
-                      {transaction.category}
-                    </div>
-                    <div className="q2 text-center w-1/5">
-                      {transaction.description}
-                    </div>
-                    <div className="q3 text-center w-1/5">
-                      {transaction.amount}
-                    </div>
-                    <div className="q4 text-center w-1/5">
-                      {transaction.type}
-                    </div>
-                    <div className="q5 text-center w-1/5">
-                      {formattime(transaction.date)}
-                    </div>
-                  </div>
-                  <div className="bl md:mt-5 h-1 bg-gray-200  rounded-lg"></div>
+              (data.transactions.length == 0 ? (
+                <div className="text-center text-2xl mt-10">
+                  No transactions yet
                 </div>
+              ) : (
+                data.transactions.map((transaction) => (
+                  <div key={transaction.date}>
+                    <div className="flex  justify-between md:text-2xl">
+                      <div className="q1 text-center w-1/5">
+                        {transaction.category}
+                      </div>
+                      <div className="q2 text-center w-1/5">
+                        {transaction.description}
+                      </div>
+                      <div className="q3 text-center w-1/5">
+                        {transaction.amount}
+                      </div>
+                      <div className="q4 text-center w-1/5">
+                        {transaction.type}
+                      </div>
+                      <div className="q5 text-center w-1/5">
+                        {formattime(transaction.date)}
+                      </div>
+                    </div>
+                    <div className="bl md:mt-5 h-1 bg-gray-200  rounded-lg"></div>
+                  </div>
+                ))
               ))}
           </div>
           <button

@@ -2,12 +2,19 @@
 import React, { useState } from "react";
 import { useSession, signOut } from "next-auth/react";
 import Image from "next/image";
-import { getPreEmitDiagnostics } from "typescript";
-import Head from "next/head";
+import { useRouter } from "next/navigation";
+
 const MyComponent = () => {
   const [isPopupOpen, setPopupOpen] = useState(false);
   const { data: session } = useSession();
-  const handleDeleteAccount = async () => {};
+  const router = useRouter();
+  const handleDeleteAccount = async () => {
+    await fetch("api/user/delete", {
+      method: "DELETE",
+    });
+    await signOut();
+    handleLogout();
+  };
   const greeting = () => {
     const date = new Date();
     const hours = date.getHours();
@@ -24,11 +31,11 @@ const MyComponent = () => {
   const handleLogout = async () => {
     await signOut();
     setPopupOpen(false);
+    router.push("/login");
   };
   console.log(session);
   return (
     <>
-      
       <div className="bg-black text-white fixed top-0 w-full">
         <div className="flex justify-between">
           <div className="lp mt-4 ml-3 text-2xl">{greeting()}</div>
@@ -48,8 +55,8 @@ const MyComponent = () => {
           </div>
         </div>
         {isPopupOpen && (
-          <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
-            <div className="bg-black text-white p-4 rounded-lg text-center">
+          <div className="fixed inset-0 flex justify-center items-center  bg-black bg-opacity-50 z-50">
+            <div className="bg-black shadow-2xl shadow-cyan-500 text-white p-4 rounded-xl py-14 px-5 text-center border-2 border-cyan-500">
               {session && (
                 <div className="mb-4">
                   <Image
@@ -69,19 +76,19 @@ const MyComponent = () => {
 
               <button
                 onClick={handleLogout}
-                className="bg-red-500 text-white px-4 py-2 rounded-md mb-2 w-full"
+                className="bg-red-500 text-white px-4 py-2 rounded-xl mb-2 w-full"
               >
                 Logout
               </button>
               <button
                 onClick={handleDeleteAccount}
-                className="bg-red-500 text-white px-4 py-2 rounded-md mb-2 w-full"
+                className="bg-red-500 text-white px-4 py-2 rounded-xl mb-2 w-full"
               >
                 Delete Account
               </button>
               <button
                 onClick={() => setPopupOpen(false)}
-                className="text-white mt-2 w-full"
+                className="text-white bg-blue-500 rounded-xl py-2 mt-2 w-full"
               >
                 Cancel
               </button>
