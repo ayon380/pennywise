@@ -20,7 +20,7 @@ const TransactionForm = ({ isOpen, onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const amount = parseFloat(formData.amount);
-
+    console.log(selectedDate);
     if (isNaN(amount) || amount <= 0) {
       window.alert("Amount must be a number greater than 0");
       return;
@@ -119,14 +119,13 @@ const TransactionForm = ({ isOpen, onClose }) => {
             </label>
             <input
               type="number"
-              
               id="amount"
               name="amount"
               value={formData.amount}
               onChange={(e) =>
                 setFormData({ ...formData, amount: e.target.value })
               }
-              className="border border-gray-300 rounded-xl bg-black text-white rounded w-full p-2"
+              className="border border-gray-300 rounded-xl bg-black text-white  w-full p-2"
               required
             />
           </div>
@@ -151,8 +150,8 @@ const TransactionForm = ({ isOpen, onClose }) => {
               Date
             </label>
             <DatePicker
-              selected={selectedDate}
-              onChange={(date) => setSelectedDate(date)}
+              selected={formData.date}
+              onChange={(date) => setFormData({ ...formData, date })}
               className="border rounded-xl bg-black text-white border-gray-300  w-full p-2"
               showTimeSelect
               timeFormat="HH:mm"
