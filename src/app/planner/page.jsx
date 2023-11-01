@@ -10,6 +10,8 @@ import { AiOutlinePlus } from "react-icons/ai";
 import TransactionForm from "../../components/TransactionForm";
 
 const Page = () => {
+  const [barColor, setBarColor] = React.useState("green");
+  const [budgetPercentage, setBudgetPercentage] = React.useState(0);
   const [data, setData] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
   const func = async () => {
@@ -17,15 +19,42 @@ const Page = () => {
       const res = await fetch("api/transaction/get", {
         method: "GET",
       });
-      const data = await res.json();
-      console.log(data.success);
-      console.log(data.data);
-      setData(data.data);
+      const tdata = await res.json();
+      console.log(tdata.success);
+      console.log(tdata.monthlyBudget);
+      setData(tdata.data);
+      if (tdata) {
+        const budgetPercentageValue =
+          data.monthlyBudget !== 0
+            ? Math.floor((data.remainingBudget / data.monthlyBudget) * 100)
+            : 0;
+
+        setBudgetPercentage(budgetPercentageValue);
+        console.log(
+          budgetPercentageValue +
+            "hjgjh " +
+            data.remainingBudget +
+            " " +
+            data.monthlyBudget
+        );
+
+        // Default color
+        setBarColor("green");
+        // If the budget is less than 25%, change the color to red
+        if (budgetPercentage < 25) {
+          setBarColor("red");
+        }
+        // If the budget is between 25% and 50%, change the color to yellow
+        else if (budgetPercentage < 50) {
+          setBarColor("yellow");
+        }
+      }
       setLoading(false);
     } catch (err) {
       console.log(err);
     }
   };
+
   const formattime = (timestamp) => {
     const date = new Date(timestamp);
 
@@ -54,10 +83,14 @@ const Page = () => {
   const handleCloseForm = () => {
     setIsFormOpen(false);
   };
-
+  console.log(status);
+  if (status === "unauthenticated") {
+    console.log("hello");
+    router.push("/login");
+  }
   React.useEffect(() => {
     func();
-  }, [isFormOpen]);
+  }, [isFormOpen, barColor, budgetPercentage]);
   return (
     <div className="bg-black pt-16 md:pt-32 text-white pb-96 h-full">
       {loading && <Loading />}
@@ -67,9 +100,22 @@ const Page = () => {
       }
       {session && data && status === "authenticated" && (
         <div>
-          <h1 className="py-10 md:py-32 text-4xl md:text-8xl text-center">
-            PennyWise
-          </h1>
+         <h1 className="py-10 md:py-32 text-4xl md:text-8xl text-center">
+  <span className="gradient-text">PennyWise</span>
+</h1>
+
+          {/* <div
+            className={`bg-${barColor}-500 h-10 mx-24 md:mx-48 mb-20 md:relative rounded-full`}
+            alt="Budget_Meter"
+          >
+            <div className="progress-bar">
+              <div
+                className="fill"
+                style={{ width: `${budgetPercentage}%` }}
+              ></div>
+            </div>
+          </div> */}
+
           <div className="lp ">
             <div className="flex text-lg md:text-2xl flex-wrap  justify-between mx-24 md:mx-48">
               <div className="q1">
@@ -106,6 +152,7 @@ const Page = () => {
               ) : (
                 data.transactions.map((transaction) => (
                   <div key={transaction.date}>
+                    <div className="bl md:mt-5 md:mb-5 h-1 bg-gray-200 mb-10 rounded-lg"></div>
                     <div className="flex  justify-between md:text-2xl">
                       <div className="q1 text-center w-1/5">
                         {transaction.category}
@@ -116,14 +163,19 @@ const Page = () => {
                       <div className="q3 text-center w-1/5">
                         {transaction.amount}
                       </div>
-                      <div className="q4 text-center w-1/5">
+                      <div
+                        className={`q4 text-center w-1/5 ${
+                          transaction.type == "credit"
+                            ? "text-green-600"
+                            : "text-red-600"
+                        }`}
+                      >
                         {transaction.type}
                       </div>
                       <div className="q5 text-center w-1/5">
                         {formattime(transaction.date)}
                       </div>
                     </div>
-                    <div className="bl md:mt-5 h-1 bg-gray-200  rounded-lg"></div>
                   </div>
                 ))
               ))}

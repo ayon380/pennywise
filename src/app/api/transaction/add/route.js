@@ -2,13 +2,13 @@ import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import BudgetCategory from "../../../../../models/Budget"; // Import the mongoose model
 import connectDB from "../../../../../middleware/mongoose"; // Import the database connection
-import { parse } from "path";
 
 export async function POST(req) {
   try {
     await connectDB();
     // Assuming you have a way to get the user's email
-    let email = "ayonsarkar380@gmail.com";
+    const session = await getServerSession({ req });
+    const email = session.user.email;
 
     const body = await req.json();
     const { category, amount, date, description, type } = body;

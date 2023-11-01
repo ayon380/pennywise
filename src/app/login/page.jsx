@@ -46,7 +46,7 @@ const Page = () => {
             onClick={handleSignOut}
             className="bg-blue-50 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           >
-            Sign out
+            <Loading />
           </button>
         ) : (
           <button
@@ -59,6 +59,7 @@ const Page = () => {
                   className="h-28 w-28 md:h-52 lg:w-52"
                   src="/google.png"
                   width={300}
+                  alt="google"
                   height={300}
                 />
               </div>

@@ -35,6 +35,7 @@ export async function POST(req) {
         email,
         image,
         monthlyBudget,
+        remainingBudget: monthlyBudget,
         accountBalance,
       });
 

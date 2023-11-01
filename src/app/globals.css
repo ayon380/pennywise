@@ -2,3 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
+/* In your custom CSS or in a separate CSS file */
+@keyframes gradient {
+  0% {
+    background-position: 100% 0%;
+  }
+  100% {
+    background-position: -100% 0%;
+  }
+}
+/* Add this CSS to your stylesheet or <style> tag */
+/* Add this CSS to your stylesheet or <style> tag */
+/* Add this CSS to your stylesheet or <style> tag */
+.gradient-text {
+  background-image: linear-gradient(to right, #9b59b6, #ffffff); /* Purple to white gradient */
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: animateGradient 6s linear infinite; /* Adjust the animation duration as needed */
+}
+
+@keyframes animateGradient {
+  0% {
+    background-position: 0% 50%; /* Start from the left */
+  }
+  100% {
+    background-position: 100% 50%; /* Move to the right */
+  }
+}
