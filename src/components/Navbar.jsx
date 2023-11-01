@@ -13,6 +13,7 @@ const MyComponent = () => {
       method: "DELETE",
     });
     await signOut();
+    router.push("/login");
     handleLogout();
   };
   const greeting = () => {
